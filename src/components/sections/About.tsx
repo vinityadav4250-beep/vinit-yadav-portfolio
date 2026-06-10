@@ -3,7 +3,7 @@ import { FaBriefcase, FaMapMarkerAlt, FaCode, FaRocket } from 'react-icons/fa'
 import { personalInfo } from '@/data/portfolio'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { GlassCard } from '@/components/ui/GlassCard'
-import { fadeInLeft, fadeInRight, staggerContainer, staggerItem } from '@/utils/animations'
+import { fadeInLeft, staggerContainer, staggerItem } from '@/utils/animations'
 
 const highlights = [
   {
