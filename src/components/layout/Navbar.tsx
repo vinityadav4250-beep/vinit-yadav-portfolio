@@ -78,7 +78,7 @@ export function Navbar() {
 
           <motion.a
             href={personalInfo.resumeUrl}
-            download
+            download={personalInfo.resumeFileName}
             className="hidden md:inline-flex items-center px-5 py-2 text-sm font-medium text-white bg-accent/20 border border-accent/30 rounded-lg hover:bg-accent/30 transition-all duration-300"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -124,7 +124,7 @@ export function Navbar() {
               ))}
               <a
                 href={personalInfo.resumeUrl}
-                download
+                download={personalInfo.resumeFileName}
                 className="block px-4 py-3 text-sm font-medium text-accent-light"
               >
                 Download Resume

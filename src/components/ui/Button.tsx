@@ -7,7 +7,9 @@ interface ButtonProps extends HTMLMotionProps<'button'> {
   children: ReactNode
   variant?: ButtonVariant
   href?: string
-  download?: boolean
+  download?: boolean | string
+  downloadName?: string
+  target?: string
   className?: string
 }
 
@@ -26,6 +28,8 @@ export function Button({
   variant = 'primary',
   href,
   download,
+  downloadName,
+  target,
   className = '',
   ...props
 }: ButtonProps) {
@@ -39,14 +43,17 @@ export function Button({
   `
 
   if (href) {
+    const downloadAttr =
+      downloadName ?? (typeof download === 'string' ? download : download ? true : undefined)
+
     return (
       <motion.a
         href={href}
-        download={download}
+        download={downloadAttr}
         className={baseClasses}
         whileHover={{ scale: 1.03, y: -2 }}
         whileTap={{ scale: 0.98 }}
-        target={href.startsWith('http') ? '_blank' : undefined}
+        target={target ?? (href.startsWith('http') ? '_blank' : undefined)}
         rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
       >
         {children}

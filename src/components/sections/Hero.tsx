@@ -70,7 +70,11 @@ export function Hero() {
           </motion.p>
 
           <motion.div variants={staggerItem} className="flex flex-wrap gap-4">
-            <Button href={personalInfo.resumeUrl} download variant="primary">
+            <Button
+              href={personalInfo.resumeUrl}
+              downloadName={personalInfo.resumeFileName}
+              variant="primary"
+            >
               <HiDownload size={18} />
               Download Resume
             </Button>

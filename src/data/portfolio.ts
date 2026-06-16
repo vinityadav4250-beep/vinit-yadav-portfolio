@@ -30,8 +30,10 @@ export const personalInfo = {
 I enjoy solving complex business problems, building scalable applications, optimizing performance, and learning modern cloud technologies.`,
   email: 'Vinityadav4250@gmail.com',
   linkedin: 'https://www.linkedin.com/in/vinit-yadav-21ba641a5',
-  github: 'https://github.com/vinityadav',
+  github: 'https://github.com/vinityadav4250-beep',
   resumeUrl: '/resume/Vinit_Yadav_Resume.pdf',
+  resumeFileName: 'Vinit_Yadav_Resume.pdf',
+  resumeTitle: 'Vinit Yadav — Full Stack .NET Developer Resume',
 }
 
 export interface Skill {
@@ -142,7 +144,7 @@ export const projects: Project[] = [
       'Multi-tenant architecture',
     ],
     technologies: ['ASP.NET Core', 'SQL Server', 'React'],
-    githubUrl: 'https://github.com/vinityadav',
+    githubUrl: 'https://github.com/vinityadav4250-beep',
     liveUrl: '#',
     gradient: 'from-indigo-500/20 to-purple-500/20',
   },
@@ -159,7 +161,7 @@ export const projects: Project[] = [
       'Error handling & retry logic',
     ],
     technologies: ['ASP.NET Core', 'REST APIs'],
-    githubUrl: 'https://github.com/vinityadav',
+    githubUrl: 'https://github.com/vinityadav4250-beep',
     liveUrl: '#',
     gradient: 'from-cyan-500/20 to-blue-500/20',
   },
@@ -176,7 +178,7 @@ export const projects: Project[] = [
       'Security audit logging',
     ],
     technologies: ['JWT', 'ASP.NET Core'],
-    githubUrl: 'https://github.com/vinityadav',
+    githubUrl: 'https://github.com/vinityadav4250-beep',
     liveUrl: '#',
     gradient: 'from-emerald-500/20 to-teal-500/20',
   },
@@ -193,7 +195,7 @@ export const projects: Project[] = [
       'Caching for performance',
     ],
     technologies: ['.NET Core', 'SQL Server'],
-    githubUrl: 'https://github.com/vinityadav',
+    githubUrl: 'https://github.com/vinityadav4250-beep',
     liveUrl: '#',
     gradient: 'from-orange-500/20 to-red-500/20',
   },
@@ -269,11 +271,12 @@ export const navLinks = [
   { label: 'Skills', href: '#skills' },
   { label: 'Experience', href: '#experience' },
   { label: 'Projects', href: '#projects' },
+  { label: 'Resume', href: '#resume' },
   { label: 'Contact', href: '#contact' },
 ]
 
 export const githubStats = {
-  username: 'vinityadav',
+  username: 'vinityadav4250-beep',
   languages: [
     { name: 'C#', percentage: 45, color: '#239120' },
     { name: 'TypeScript', percentage: 25, color: '#3178C6' },

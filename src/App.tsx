@@ -10,6 +10,7 @@ import { Skills } from '@/components/sections/Skills'
 import { Experience } from '@/components/sections/Experience'
 import { Projects } from '@/components/sections/Projects'
 import { Certifications } from '@/components/sections/Certifications'
+import { Resume } from '@/components/sections/Resume'
 import { Achievements } from '@/components/sections/Achievements'
 import { GitHubStats } from '@/components/sections/GitHubStats'
 import { Contact } from '@/components/sections/Contact'
@@ -45,6 +46,7 @@ function App() {
           <Experience />
           <Projects />
           <Certifications />
+          <Resume />
           <Achievements />
           <GitHubStats />
           <Contact />
