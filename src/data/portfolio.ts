@@ -41,7 +41,7 @@ export const personalInfo = {
   linkedinLabel: 'linkedin.com/in/vinit-yadav-21ba641a5',
   github: 'https://github.com/vinityadav4250-beep',
   githubLabel: 'github.com/vinityadav4250-beep',
-  resumeUrl: '/resume/Vinit_Yadav_Resume.pdf',
+  resumeUrl: `${import.meta.env.BASE_URL}resume/Vinit_Yadav_Resume.pdf`,
   resumeFileName: 'Vinit_Yadav_FullStack_Resume.pdf',
 }
 

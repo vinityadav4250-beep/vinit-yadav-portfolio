@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "predeploy": "cross-env GITHUB_PAGES=true npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist --nojekyll"
   },
   "dependencies": {
     "framer-motion": "^11.15.0",
