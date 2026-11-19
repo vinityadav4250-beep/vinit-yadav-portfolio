@@ -219,6 +219,9 @@ export interface Project {
   architecture: string[]
   /** visual identity for the preview panel */
   accent: 'violet' | 'cyan' | 'blue' | 'emerald'
+  /** illustrative stock photo (Unsplash) — file in public/projects */
+  image: string
+  imageAlt: string
   status?: 'In progress'
   note: string
 }
@@ -248,6 +251,8 @@ export const projects: Project[] = [
       'SQL Server stored procedures for heavy queries',
     ],
     accent: 'violet',
+    image: 'projects/crm-revamp.webp',
+    imageAlt: 'Laptop screen showing analytics charts and graphs',
     note: 'Confidential company project — no public repository or demo.',
   },
   {
@@ -273,6 +278,8 @@ export const projects: Project[] = [
       'Adapter layer per insurer API',
     ],
     accent: 'cyan',
+    image: 'projects/life-insurance.webp',
+    imageAlt: 'Family standing together in a field at sunset',
     note: 'Confidential company project — no public repository or demo.',
   },
   {
@@ -299,6 +306,8 @@ export const projects: Project[] = [
       'Data sync & compliance with external providers',
     ],
     accent: 'blue',
+    image: 'projects/vehicle-insurance.webp',
+    imageAlt: 'Sports car driving on an open road at sunset',
     note: 'Confidential company project — no public repository or demo.',
   },
   {
@@ -321,6 +330,8 @@ export const projects: Project[] = [
       'Builds on 4 years of insurance-domain experience',
     ],
     accent: 'emerald',
+    image: 'projects/driveiq.webp',
+    imageAlt: 'In-car touchscreen showing navigation and vehicle data',
     status: 'In progress',
     note: 'Independent concept in active development — not a released product.',
   },

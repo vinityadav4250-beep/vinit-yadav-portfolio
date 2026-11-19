@@ -25,6 +25,7 @@ src/
 public/
 ├── resume/Vinit_Yadav_Resume.pdf   # served by every "Download Resume" button
 ├── og-image.png                    # 1200×630 social preview
+├── projects/*.webp                 # illustrative project photos (Unsplash)
 ├── robots.txt, sitemap.xml, favicon.svg
 ```
 
@@ -55,3 +56,15 @@ Deployed on Vercel (`vercel.json`); pushes to `main` redeploy automatically.
 
 > Note: if the project sits in a OneDrive folder and Vite fails with `EPERM … node_modules\.vite\deps`,
 > delete `node_modules/.vite` and start again.
+
+## Image credits
+
+Project preview photos are illustrative stock images from [Unsplash](https://unsplash.com), used under the
+[Unsplash License](https://unsplash.com/license). The real systems are confidential.
+
+- CRM System Revamp — https://unsplash.com/photos/JKUTrJ4vK00
+- Life Insurance Management System — https://unsplash.com/photos/LOuffSFpWQI
+- Vehicle Insurance Management System — https://unsplash.com/photos/ZRns2R5azu0
+- DriveIQ AI — https://unsplash.com/photos/79hRh262lpY
+
+To swap a photo, replace the file in `public/projects/` (keep the name) or change `image` in `src/data/portfolio.ts`.
