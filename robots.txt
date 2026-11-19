@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://vinit-yadav-portfolio.vercel.app/sitemap.xml
