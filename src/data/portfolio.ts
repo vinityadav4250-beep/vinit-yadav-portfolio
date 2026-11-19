@@ -333,13 +333,15 @@ export const projects: Project[] = [
 export interface Certification {
   title: string
   issuer: string
-  platform: string
+  platform: 'LinkedIn Learning' | 'Microsoft Learn'
+  /** shown as the card badge */
+  kind: 'Professional certificate' | 'Learning path' | 'Course badge'
   date: string
   isoDate: string
-  duration: string
+  duration?: string
   skills: string[]
   url: string
-  credentialId: string
+  credentialId?: string
 }
 
 export const certifications: Certification[] = [
@@ -347,6 +349,7 @@ export const certifications: Certification[] = [
     title: 'Career Essentials in Generative AI',
     issuer: 'Microsoft & LinkedIn',
     platform: 'LinkedIn Learning',
+    kind: 'Learning path',
     date: 'Sep 29, 2026',
     isoDate: '2026-09-29',
     duration: '4h 23m',
@@ -358,12 +361,33 @@ export const certifications: Certification[] = [
     title: 'Microsoft Azure AI Essentials Professional Certificate',
     issuer: 'Microsoft & LinkedIn',
     platform: 'LinkedIn Learning',
+    kind: 'Professional certificate',
     date: 'Sep 22, 2026',
     isoDate: '2026-09-22',
     duration: '3h 23m',
     skills: ['Machine Learning', 'Azure AI Studio', 'Generative AI'],
     url: 'https://lnkd.in/dGwZ-KCs',
     credentialId: 'd5cdf226…7a20c3',
+  },
+  {
+    title: 'Introduction to Generative AI and Agents',
+    issuer: 'Microsoft',
+    platform: 'Microsoft Learn',
+    kind: 'Course badge',
+    date: 'Aug 3, 2026',
+    isoDate: '2026-08-03',
+    skills: ['Generative AI', 'AI Agents', 'Azure AI'],
+    url: 'https://learn.microsoft.com/api/achievements/share/en-us/VinitYadav-4064/NQDQU82F?sharingId=3376AD0349DF726D',
+  },
+  {
+    title: 'Describe the Core Architectural Components of Azure',
+    issuer: 'Microsoft',
+    platform: 'Microsoft Learn',
+    kind: 'Course badge',
+    date: 'Aug 3, 2026',
+    isoDate: '2026-08-03',
+    skills: ['Microsoft Azure', 'Cloud Architecture', 'Cloud Computing'],
+    url: 'https://learn.microsoft.com/api/achievements/share/en-us/VinitYadav-4064/WMBM9D3N?sharingId=3376AD0349DF726D',
   },
 ]
 
