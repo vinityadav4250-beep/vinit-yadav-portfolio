@@ -1,60 +1,76 @@
-import { motion, HTMLMotionProps } from 'framer-motion'
-import { ReactNode } from 'react'
+import { useRef } from 'react'
+import type { ReactNode, MouseEvent } from 'react'
+import { motion, useMotionValue, useSpring, useReducedMotion } from 'framer-motion'
 
-type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost'
+type Variant = 'primary' | 'secondary' | 'ghost'
 
-interface ButtonProps extends HTMLMotionProps<'button'> {
+interface BaseProps {
   children: ReactNode
-  variant?: ButtonVariant
-  href?: string
-  download?: boolean | string
-  downloadName?: string
-  target?: string
+  variant?: Variant
   className?: string
+  /** pull strength of the magnetic effect, 0 disables it */
+  magnetic?: number
+  ariaLabel?: string
 }
 
-const variants: Record<ButtonVariant, string> = {
+interface LinkProps extends BaseProps {
+  href: string
+  download?: string
+  external?: boolean
+  onClick?: (e: MouseEvent<HTMLAnchorElement>) => void
+}
+
+interface ActionProps extends BaseProps {
+  href?: undefined
+  type?: 'button' | 'submit'
+  onClick?: () => void
+  disabled?: boolean
+}
+
+const styles: Record<Variant, string> = {
   primary:
-    'bg-gradient-to-r from-accent to-accent-dark text-white shadow-glow hover:shadow-[0_0_50px_rgba(99,102,241,0.5)]',
+    'text-ink-950 bg-zinc-50 hover:bg-white shadow-[0_0_0_1px_rgba(255,255,255,0.1),0_8px_30px_-6px_rgba(139,92,246,0.55)] hover:shadow-[0_0_0_1px_rgba(255,255,255,0.2),0_10px_40px_-6px_rgba(139,92,246,0.8)]',
   secondary:
-    'bg-white/10 text-white border border-white/20 hover:bg-white/20 hover:border-white/30',
-  outline:
-    'bg-transparent text-accent-light border border-accent/50 hover:bg-accent/10 hover:border-accent',
-  ghost: 'bg-transparent text-gray-300 hover:text-white hover:bg-white/5',
+    'text-zinc-100 bg-white/[0.04] border border-white/10 hover:bg-white/[0.08] hover:border-white/20 backdrop-blur',
+  ghost: 'text-zinc-400 hover:text-zinc-100',
 }
 
-export function Button({
-  children,
-  variant = 'primary',
-  href,
-  download,
-  downloadName,
-  target,
-  className = '',
-  ...props
-}: ButtonProps) {
-  const baseClasses = `
-    inline-flex items-center justify-center gap-2
-    px-6 py-3 rounded-xl font-medium text-sm
-    transition-all duration-300
-    focus:outline-none focus:ring-2 focus:ring-accent/50 focus:ring-offset-2 focus:ring-offset-dark-900
-    ${variants[variant]}
-    ${className}
-  `
+export function Button(props: LinkProps | ActionProps) {
+  const { children, variant = 'primary', className = '', magnetic = 0.25, ariaLabel } = props
+  const ref = useRef<HTMLElement | null>(null)
+  const reduce = useReducedMotion()
+  const x = useSpring(useMotionValue(0), { stiffness: 220, damping: 18, mass: 0.4 })
+  const y = useSpring(useMotionValue(0), { stiffness: 220, damping: 18, mass: 0.4 })
 
-  if (href) {
-    const downloadAttr =
-      downloadName ?? (typeof download === 'string' ? download : download ? true : undefined)
+  const onMove = (e: MouseEvent) => {
+    if (reduce || !magnetic || !ref.current) return
+    const r = ref.current.getBoundingClientRect()
+    x.set((e.clientX - (r.left + r.width / 2)) * magnetic)
+    y.set((e.clientY - (r.top + r.height / 2)) * magnetic)
+  }
+  const onLeave = () => {
+    x.set(0)
+    y.set(0)
+  }
 
+  const cls = `group relative inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-[background,box-shadow,border-color,color] duration-300 disabled:opacity-60 ${styles[variant]} ${className}`
+
+  if (props.href !== undefined) {
+    const external = props.external ?? props.href.startsWith('http')
     return (
       <motion.a
-        href={href}
-        download={downloadAttr}
-        className={baseClasses}
-        whileHover={{ scale: 1.03, y: -2 }}
-        whileTap={{ scale: 0.98 }}
-        target={target ?? (href.startsWith('http') ? '_blank' : undefined)}
-        rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+        ref={(el) => (ref.current = el)}
+        href={props.href}
+        download={props.download}
+        onClick={props.onClick}
+        aria-label={ariaLabel}
+        target={external ? '_blank' : undefined}
+        rel={external ? 'noopener noreferrer' : undefined}
+        onMouseMove={onMove}
+        onMouseLeave={onLeave}
+        style={{ x, y }}
+        whileTap={{ scale: 0.97 }}
+        className={cls}
       >
         {children}
       </motion.a>
@@ -62,7 +78,18 @@ export function Button({
   }
 
   return (
-    <motion.button className={baseClasses} whileHover={{ scale: 1.03, y: -2 }} whileTap={{ scale: 0.98 }} {...props}>
+    <motion.button
+      ref={(el) => (ref.current = el)}
+      type={props.type ?? 'button'}
+      onClick={props.onClick}
+      disabled={props.disabled}
+      aria-label={ariaLabel}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+      style={{ x, y }}
+      whileTap={{ scale: 0.97 }}
+      className={cls}
+    >
       {children}
     </motion.button>
   )

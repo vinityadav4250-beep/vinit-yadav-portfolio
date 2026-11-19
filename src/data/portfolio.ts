@@ -1,287 +1,381 @@
+import type { IconType } from 'react-icons'
 import {
+  SiDotnet,
   SiReact,
+  SiRedux,
   SiJavascript,
-  SiTypescript,
   SiHtml5,
   SiCss,
-  SiTailwindcss,
-  SiDotnet,
-  SiMongodb,
+  SiVite,
+  SiMysql,
   SiPostgresql,
-  SiRedis,
+  SiMongodb,
+  SiDocker,
+  SiGitlab,
   SiGit,
   SiGithub,
+  SiPostman,
+  SiGithubcopilot,
 } from 'react-icons/si'
-import { FaDatabase, FaServer, FaCloud } from 'react-icons/fa'
-import { TbBrandAzure, TbBrandCSharp } from 'react-icons/tb'
-import { IconType } from 'react-icons'
+import { TbBrandCSharp, TbBrandAzure, TbBrandVscode, TbApi, TbDatabase, TbBrandAws } from 'react-icons/tb'
+import { DiVisualstudio } from 'react-icons/di'
+import { VscAzureDevops } from 'react-icons/vsc'
+import { HiOutlineCursorArrowRays } from 'react-icons/hi2'
+
+/* ------------------------------------------------------------------ */
+/*  Profile                                                            */
+/* ------------------------------------------------------------------ */
+
+export const SITE_URL = 'https://vinit-yadav-portfolio.vercel.app'
 
 export const personalInfo = {
   name: 'Vinit Yadav',
-  title: 'Full Stack .NET Developer',
-  experience: '4 Years of Professional Experience in Software Development',
-  company: 'EbixCash',
-  location: 'Noida, Uttar Pradesh, India',
-  headline: 'Building Scalable Enterprise Applications with .NET & React',
-  subheadline:
-    'Full Stack Developer specializing in ASP.NET Core, React.js, SQL Server, and Modern Web Technologies.',
-  about: `I am a Full Stack .NET Developer specializing in ASP.NET Core, C#, SQL Server, React.js, REST APIs, and enterprise application development. I have experience working on insurance domain applications, CKYC integrations, third-party API integrations, authentication systems, policy issuance systems, and scalable backend services.
-
-I enjoy solving complex business problems, building scalable applications, optimizing performance, and learning modern cloud technologies.`,
+  initials: 'VY',
+  title: 'Full-Stack Software Engineer',
+  tagline: '.NET Core · C# · React · Cloud · AI Integration',
+  company: 'EBIXCASH',
+  location: 'Noida, India',
+  yearsOfExperience: 4,
   email: 'Vinityadav4250@gmail.com',
   linkedin: 'https://www.linkedin.com/in/vinit-yadav-21ba641a5',
+  linkedinLabel: 'linkedin.com/in/vinit-yadav-21ba641a5',
   github: 'https://github.com/vinityadav4250-beep',
+  githubLabel: 'github.com/vinityadav4250-beep',
   resumeUrl: '/resume/Vinit_Yadav_Resume.pdf',
-  resumeFileName: 'Vinit_Yadav_Resume.pdf',
-  resumeTitle: 'Vinit Yadav — Full Stack .NET Developer Resume',
+  resumeFileName: 'Vinit_Yadav_FullStack_Resume.pdf',
 }
 
-export interface Skill {
+export const hero = {
+  heading: 'Building Scalable Digital Products with .NET & Modern Technologies.',
+  /** words in the heading rendered with the gradient treatment */
+  highlight: ['.NET', 'Modern', 'Technologies.'],
+  subheading:
+    "I'm Vinit Yadav, a Full-Stack Software Engineer with 4 years of experience building enterprise applications, scalable APIs, CRM platforms, and modern web experiences.",
+  roles: [
+    'Full-Stack Software Engineer',
+    'ASP.NET Core API Engineer',
+    'React & Redux Developer',
+    'Integration Specialist',
+    'Production Problem Solver',
+  ],
+  proof: ['4+ Years Experience', 'Production Systems', 'Full-Stack Development'],
+}
+
+export const about = {
+  paragraphs: [
+    "I'm a Full-Stack Software Engineer at EBIXCASH, where for the last four years I've been building the systems behind insurance and CRM platforms that handle thousands of transactions every day. Most of my work lives in C#, .NET Core and ASP.NET Core on the backend, with React and Redux on the front end.",
+    "My journey started on the Vehicle Insurance platform, writing features for quotes, policy issuance and renewals. In 2024 I moved to the Life Insurance platform, and since 2025 I've been part of the CRM revamp — each step widening my scope into API design, third-party integrations and cross-team API contracts.",
+    "I'm at my best when something is broken in production. I trace the request end to end, validate what external services actually returned, find the edge case nobody planned for, and fix it so it stays fixed. I care about clean layered architecture, honest database design and APIs other teams can rely on — and I use AI tools like GitHub Copilot and Cursor to move faster without lowering the bar.",
+  ],
+  focus: [
+    { title: 'Backend engineering', text: 'REST APIs with ASP.NET Core, EF Core, LINQ and clean layered architecture.' },
+    { title: 'Full-stack delivery', text: 'React + Redux modules wired to .NET APIs, shipped in Agile sprints.' },
+    { title: 'Production debugging', text: 'Tracing request flows across services to find and fix root causes.' },
+    { title: 'Third-party integrations', text: 'Insurer, payment and KYC APIs over REST and SOAP, in production.' },
+    { title: 'Database optimization', text: 'Stored procedures, query tuning and server-side pagination on SQL Server & MySQL.' },
+    { title: 'Scalable architecture', text: 'Repository pattern, dependency injection, SOLID and multi-tenant design.' },
+    { title: 'AI-assisted development', text: 'Copilot, ChatGPT and Cursor for velocity — with careful review of AI output.' },
+  ],
+}
+
+/* ------------------------------------------------------------------ */
+/*  Impact — resume-backed numbers only                                */
+/* ------------------------------------------------------------------ */
+
+export interface Metric {
+  value: number
+  suffix: string
+  label: string
+  description: string
+}
+
+export const metrics: Metric[] = [
+  { value: 4, suffix: '+', label: 'Years', description: 'Professional experience shipping production systems' },
+  { value: 30, suffix: '%', label: 'Fewer errors', description: 'Reduction in data retrieval errors across insurance modules' },
+  { value: 25, suffix: '%', label: 'Faster APIs', description: 'Improvement in API response times through database optimization' },
+  { value: 40, suffix: '%', label: 'Less manual work', description: 'Reduction in manual processing in life insurance workflows' },
+  { value: 20, suffix: '%', label: 'Higher velocity', description: 'Improvement in development velocity through AI-assisted practices' },
+]
+
+/* ------------------------------------------------------------------ */
+/*  Tech stack                                                         */
+/* ------------------------------------------------------------------ */
+
+export interface Tech {
   name: string
   icon: IconType
   color: string
 }
 
-export interface SkillCategory {
+export interface TechGroup {
   title: string
-  icon: IconType
-  skills: Skill[]
+  caption: string
+  items: Tech[]
 }
 
-export const skillCategories: SkillCategory[] = [
+export const techStack: TechGroup[] = [
   {
-    title: 'Frontend',
-    icon: SiReact,
-    skills: [
-      { name: 'React.js', icon: SiReact, color: '#61DAFB' },
-      { name: 'JavaScript', icon: SiJavascript, color: '#F7DF1E' },
-      { name: 'TypeScript', icon: SiTypescript, color: '#3178C6' },
-      { name: 'HTML5', icon: SiHtml5, color: '#E34F26' },
-      { name: 'CSS3', icon: SiCss, color: '#1572B6' },
-      { name: 'Tailwind CSS', icon: SiTailwindcss, color: '#06B6D4' },
+    title: 'Backend',
+    caption: 'APIs, services & data access',
+    items: [
+      { name: 'C#', icon: TbBrandCSharp, color: '#a179dc' },
+      { name: '.NET Core', icon: SiDotnet, color: '#8b6cf0' },
+      { name: 'ASP.NET Core', icon: SiDotnet, color: '#8b6cf0' },
+      { name: 'Web API', icon: TbApi, color: '#7dd3fc' },
+      { name: 'Entity Framework Core', icon: SiDotnet, color: '#8b6cf0' },
+      { name: 'LINQ', icon: TbBrandCSharp, color: '#a179dc' },
+      { name: 'ADO.NET', icon: TbDatabase, color: '#94a3b8' },
     ],
   },
   {
-    title: 'Backend',
-    icon: FaServer,
-    skills: [
-      { name: 'ASP.NET Core', icon: SiDotnet, color: '#512BD4' },
-      { name: 'C#', icon: TbBrandCSharp, color: '#239120' },
-      { name: '.NET Core', icon: SiDotnet, color: '#512BD4' },
-      { name: 'REST APIs', icon: FaServer, color: '#6366F1' },
-      { name: 'Entity Framework Core', icon: SiDotnet, color: '#512BD4' },
+    title: 'Frontend',
+    caption: 'Interfaces & state',
+    items: [
+      { name: 'React', icon: SiReact, color: '#61dafb' },
+      { name: 'Redux', icon: SiRedux, color: '#a78bfa' },
+      { name: 'JavaScript', icon: SiJavascript, color: '#f7df1e' },
+      { name: 'HTML5', icon: SiHtml5, color: '#f06529' },
+      { name: 'CSS3', icon: SiCss, color: '#2965f1' },
+      { name: 'Vite', icon: SiVite, color: '#a78bfa' },
     ],
   },
   {
     title: 'Database',
-    icon: FaDatabase,
-    skills: [
-      { name: 'SQL Server', icon: FaDatabase, color: '#CC2927' },
-      { name: 'MongoDB', icon: SiMongodb, color: '#47A248' },
-      { name: 'PostgreSQL', icon: SiPostgresql, color: '#4169E1' },
-      { name: 'Redis', icon: SiRedis, color: '#DC382D' },
+    caption: 'Relational & document stores',
+    items: [
+      { name: 'SQL Server', icon: TbDatabase, color: '#e05c5c' },
+      { name: 'MySQL', icon: SiMysql, color: '#4a9fd6' },
+      { name: 'PostgreSQL', icon: SiPostgresql, color: '#6b9bd8' },
+      { name: 'MongoDB', icon: SiMongodb, color: '#4db33d' },
     ],
   },
   {
     title: 'Cloud & DevOps',
-    icon: FaCloud,
-    skills: [
-      { name: 'Azure', icon: TbBrandAzure, color: '#0078D4' },
-      { name: 'Git', icon: SiGit, color: '#F05032' },
-      { name: 'GitHub', icon: SiGithub, color: '#FFFFFF' },
-      { name: 'CI/CD', icon: FaCloud, color: '#22D3EE' },
+    caption: 'Build, ship & run',
+    items: [
+      { name: 'Microsoft Azure', icon: TbBrandAzure, color: '#3b9ce8' },
+      { name: 'Azure DevOps', icon: VscAzureDevops, color: '#3b9ce8' },
+      { name: 'Docker', icon: SiDocker, color: '#2496ed' },
+      { name: 'GitLab CI/CD', icon: SiGitlab, color: '#fc6d26' },
+      { name: 'AWS (Basic)', icon: TbBrandAws, color: '#ff9900' },
+    ],
+  },
+  {
+    title: 'Tools',
+    caption: 'Daily workflow',
+    items: [
+      { name: 'Git', icon: SiGit, color: '#f05032' },
+      { name: 'GitHub', icon: SiGithub, color: '#e5e7eb' },
+      { name: 'GitLab', icon: SiGitlab, color: '#fc6d26' },
+      { name: 'Postman', icon: SiPostman, color: '#ff6c37' },
+      { name: 'Visual Studio', icon: DiVisualstudio, color: '#a179dc' },
+      { name: 'VS Code', icon: TbBrandVscode, color: '#3ea6f0' },
+      { name: 'GitHub Copilot', icon: SiGithubcopilot, color: '#e5e7eb' },
+      { name: 'Cursor', icon: HiOutlineCursorArrowRays, color: '#e5e7eb' },
     ],
   },
 ]
 
-export interface Experience {
-  company: string
-  role: string
-  period: string
-  location: string
-  responsibilities: string[]
+/* ------------------------------------------------------------------ */
+/*  Experience                                                         */
+/* ------------------------------------------------------------------ */
+
+export const experience = {
+  company: 'EBIXCASH',
+  role: 'Backend / Full-Stack Engineer (.NET Core)',
+  period: 'September 2022 – Present',
+  location: 'Noida, India',
+  responsibilities: [
+    'Developed production REST APIs using C#, ASP.NET Core and Entity Framework Core for enterprise insurance and CRM platforms.',
+    'Built React and Redux front-end modules with reusable components, integrated with .NET APIs.',
+    'Integrated third-party REST and SOAP APIs for real-time policy verification, data retrieval and claims.',
+    'Implemented insurance provider, payment and KYC integrations across life and vehicle (4W/2W) modules.',
+    'Optimized SQL queries, stored procedures and database operations on SQL Server and MySQL.',
+    'Implemented OAuth 2.0, JWT authentication and role-based access control.',
+    'Troubleshot complex production API, database and integration failures by tracing request flows.',
+    'Worked with Azure DevOps, GitLab CI/CD and Docker for automated testing and deployments.',
+    'Reviewed peer-written and AI-generated code; used AI-assisted tools to speed up delivery.',
+  ],
+  progression: [
+    { year: '2022', title: 'Vehicle Insurance Platform', text: 'Feature development for 4W/2W quotes, issuance, renewals and endorsements.' },
+    { year: '2024', title: 'Life Insurance Platform', text: 'Policy administration, claims and insurer API integrations.' },
+    { year: '2025', title: 'CRM Revamp', text: 'API design, multi-tenant RBAC and cross-team API contracts.' },
+  ],
 }
 
-export const experiences: Experience[] = [
-  {
-    company: 'EbixCash',
-    role: '.NET Developer',
-    period: 'Present',
-    location: 'Noida, Uttar Pradesh, India',
-    responsibilities: [
-      'Developed enterprise insurance applications',
-      'Integrated third-party APIs',
-      'Implemented CKYC solutions',
-      'Designed scalable backend services',
-      'Optimized SQL queries and APIs',
-      'Worked on authentication and authorization',
-    ],
-  },
-]
+/* ------------------------------------------------------------------ */
+/*  Projects                                                           */
+/* ------------------------------------------------------------------ */
 
 export interface Project {
-  id: number
+  id: string
+  index: string
   title: string
-  description: string
+  kind: string
+  period: string
+  summary: string
+  tech: string[]
   features: string[]
-  technologies: string[]
-  githubUrl: string
-  liveUrl: string
-  gradient: string
+  architecture: string[]
+  /** visual identity for the preview panel */
+  accent: 'violet' | 'cyan' | 'blue' | 'emerald'
+  status?: 'In progress'
+  note: string
 }
 
 export const projects: Project[] = [
   {
-    id: 1,
-    title: 'Insurance Management System',
-    description:
-      'A comprehensive enterprise insurance management platform for policy lifecycle management, claims processing, and customer onboarding.',
+    id: 'crm-revamp',
+    index: '01',
+    title: 'CRM System Revamp',
+    kind: 'Enterprise CRM · EBIXCASH',
+    period: '2025 — Present',
+    summary:
+      'A ground-up revamp of an enterprise CRM: REST APIs for user management, leads, ticketing and customer lifecycle, secured with JWT-based role access and multi-tenant data isolation.',
+    tech: ['.NET Core', 'ASP.NET Core', 'React', 'SQL Server', 'JWT'],
     features: [
-      'Policy lifecycle management',
-      'Claims processing workflow',
-      'Customer onboarding portal',
-      'Real-time reporting dashboard',
+      'User management',
+      'Lead tracking',
+      'Ticketing system',
+      'Customer lifecycle management',
       'Multi-tenant architecture',
+      'Role-based authentication',
+      'Server-side pagination & filtering',
     ],
-    technologies: ['ASP.NET Core', 'SQL Server', 'React'],
-    githubUrl: 'https://github.com/vinityadav4250-beep',
-    liveUrl: '#',
-    gradient: 'from-indigo-500/20 to-purple-500/20',
+    architecture: [
+      'ASP.NET Core + EF Core REST API layer',
+      'JWT RBAC with per-tenant data isolation',
+      'SQL Server stored procedures for heavy queries',
+    ],
+    accent: 'violet',
+    note: 'Confidential company project — no public repository or demo.',
   },
   {
-    id: 2,
-    title: 'CKYC Integration Platform',
-    description:
-      'Central KYC integration platform enabling seamless customer verification across multiple insurance providers and financial institutions.',
+    id: 'life-insurance',
+    index: '02',
+    title: 'Life Insurance Management System',
+    kind: 'Insurance platform · EBIXCASH',
+    period: '2024 — Present',
+    summary:
+      'Policy administration, claims and CRM platform. Integrated multiple insurer APIs for verification, premium calculation and claim status — reducing manual processing by 40%.',
+    tech: ['.NET Core', 'ASP.NET MVC', 'SQL Server', 'REST APIs'],
     features: [
-      'CKYC API integration',
-      'Automated KYC verification',
-      'Document validation pipeline',
-      'Compliance reporting',
-      'Error handling & retry logic',
+      'Policy administration',
+      'Claims management',
+      'Premium calculation',
+      'Insurer API integrations',
+      'Policy verification',
+      'Automated workflows',
     ],
-    technologies: ['ASP.NET Core', 'REST APIs'],
-    githubUrl: 'https://github.com/vinityadav4250-beep',
-    liveUrl: '#',
-    gradient: 'from-cyan-500/20 to-blue-500/20',
+    architecture: [
+      'Layered architecture with repository pattern',
+      'Dependency injection for testable services',
+      'Adapter layer per insurer API',
+    ],
+    accent: 'cyan',
+    note: 'Confidential company project — no public repository or demo.',
   },
   {
-    id: 3,
-    title: 'Authentication & Authorization System',
-    description:
-      'Enterprise-grade authentication system with JWT tokens, role-based access control, and secure API gateway integration.',
+    id: 'vehicle-insurance',
+    index: '03',
+    title: 'Vehicle Insurance Management System',
+    kind: '4W / 2W insurance · EBIXCASH',
+    period: '2022 — Present',
+    summary:
+      'Backend services for quotes, issuance, renewals and endorsements, with optimized queries and caching for real-time premium calculation and policy document generation.',
+    tech: ['C#', '.NET Core', 'React', 'MySQL', 'REST/SOAP APIs'],
     features: [
-      'JWT-based authentication',
-      'Role-based access control',
-      'OAuth 2.0 integration',
-      'Session management',
-      'Security audit logging',
+      'Vehicle insurance quotes',
+      'Policy issuance',
+      'Renewals & endorsements',
+      'Payment integrations',
+      'KYC integrations',
+      'Third-party insurer integrations',
+      'Policy document generation',
     ],
-    technologies: ['JWT', 'ASP.NET Core'],
-    githubUrl: 'https://github.com/vinityadav4250-beep',
-    liveUrl: '#',
-    gradient: 'from-emerald-500/20 to-teal-500/20',
+    architecture: [
+      'REST + SOAP provider integration services',
+      'Caching for real-time premium calculation',
+      'Data sync & compliance with external providers',
+    ],
+    accent: 'blue',
+    note: 'Confidential company project — no public repository or demo.',
   },
   {
-    id: 4,
-    title: 'Vehicle Insurance Quote Engine',
-    description:
-      'High-performance quote generation engine for vehicle insurance with real-time premium calculation and third-party data integration.',
+    id: 'driveiq',
+    index: '04',
+    title: 'DriveIQ AI',
+    kind: 'Independent product concept',
+    period: 'In progress',
+    summary:
+      'An AI-powered Vehicle Finance, Insurance & Risk Intelligence Platform — a personal product concept exploring how AI can bring finance, insurance and risk signals for a vehicle into one place.',
+    tech: ['.NET', 'React', 'AI Integration'],
     features: [
-      'Real-time premium calculation',
-      'Vehicle data integration',
-      'Quote comparison engine',
-      'PDF quote generation',
-      'Caching for performance',
+      'Vehicle finance insights',
+      'Insurance intelligence',
+      'Risk assessment signals',
+      'AI-assisted recommendations',
     ],
-    technologies: ['.NET Core', 'SQL Server'],
-    githubUrl: 'https://github.com/vinityadav4250-beep',
-    liveUrl: '#',
-    gradient: 'from-orange-500/20 to-red-500/20',
+    architecture: [
+      'Concept stage — architecture being designed',
+      'Builds on 4 years of insurance-domain experience',
+    ],
+    accent: 'emerald',
+    status: 'In progress',
+    note: 'Independent concept in active development — not a released product.',
   },
 ]
+
+/* ------------------------------------------------------------------ */
+/*  Certifications                                                     */
+/* ------------------------------------------------------------------ */
 
 export interface Certification {
   title: string
   issuer: string
-  year: string
-  status: 'completed' | 'planned'
-  description: string
+  platform: string
+  date: string
+  isoDate: string
+  duration: string
+  skills: string[]
+  url: string
+  credentialId: string
 }
 
 export const certifications: Certification[] = [
   {
-    title: 'AI Workshop Certificate',
-    issuer: 'Professional Development',
-    year: '2024',
-    status: 'completed',
-    description: 'Completed intensive AI/ML workshop covering modern AI applications in software development.',
+    title: 'Career Essentials in Generative AI',
+    issuer: 'Microsoft & LinkedIn',
+    platform: 'LinkedIn Learning',
+    date: 'Sep 29, 2026',
+    isoDate: '2026-09-29',
+    duration: '4h 23m',
+    skills: ['Microsoft Copilot', 'Generative AI', 'Responsible AI'],
+    url: 'https://www.linkedin.com/learning/certificates/3b5e2a8022d47b2ba64739cccdf79fa6ddb5d66488068b03138cd1729ca7ff7b',
+    credentialId: '3b5e2a80…a7ff7b',
   },
   {
-    title: 'Microsoft Certifications',
-    issuer: 'Microsoft',
-    year: '2025',
-    status: 'planned',
-    description: 'Pursuing Azure Developer Associate and .NET certifications to validate cloud expertise.',
-  },
-  {
-    title: 'Cloud Certifications',
-    issuer: 'Cloud Providers',
-    year: '2025',
-    status: 'planned',
-    description: 'Planning AWS and Azure cloud architecture certifications for enterprise cloud solutions.',
+    title: 'Microsoft Azure AI Essentials Professional Certificate',
+    issuer: 'Microsoft & LinkedIn',
+    platform: 'LinkedIn Learning',
+    date: 'Sep 22, 2026',
+    isoDate: '2026-09-22',
+    duration: '3h 23m',
+    skills: ['Machine Learning', 'Azure AI Studio', 'Generative AI'],
+    url: 'https://lnkd.in/dGwZ-KCs',
+    credentialId: 'd5cdf226…7a20c3',
   },
 ]
 
-export interface Achievement {
-  value: string
-  label: string
-  description: string
-}
-
-export const achievements: Achievement[] = [
-  {
-    value: '500+',
-    label: 'LinkedIn Connections',
-    description: 'Strong professional network in tech industry',
-  },
-  {
-    value: '10+',
-    label: 'Enterprise Integrations',
-    description: 'Third-party APIs and CKYC solutions delivered',
-  },
-  {
-    value: '4+',
-    label: 'Years in Production',
-    description: 'Enterprise application development experience',
-  },
-]
-
-export const typingRoles = [
-  'Full Stack .NET Developer',
-  'ASP.NET Core Specialist',
-  'React.js Developer',
-  'Enterprise Solutions Architect',
-  'API Integration Expert',
-]
+/* ------------------------------------------------------------------ */
+/*  Navigation                                                         */
+/* ------------------------------------------------------------------ */
 
 export const navLinks = [
-  { label: 'Home', href: '#home' },
   { label: 'About', href: '#about' },
-  { label: 'Skills', href: '#skills' },
+  { label: 'Stack', href: '#stack' },
   { label: 'Experience', href: '#experience' },
   { label: 'Projects', href: '#projects' },
-  { label: 'Resume', href: '#resume' },
+  { label: 'Certifications', href: '#certifications' },
   { label: 'Contact', href: '#contact' },
 ]
-
-export const githubStats = {
-  username: 'vinityadav4250-beep',
-  languages: [
-    { name: 'C#', percentage: 45, color: '#239120' },
-    { name: 'TypeScript', percentage: 25, color: '#3178C6' },
-    { name: 'JavaScript', percentage: 15, color: '#F7DF1E' },
-    { name: 'SQL', percentage: 10, color: '#CC2927' },
-    { name: 'Other', percentage: 5, color: '#6366F1' },
-  ],
-}

@@ -33,6 +33,6 @@ echo.
 echo [SUCCESS] Resume copied to:
 echo %DEST%
 echo.
-echo Now refresh http://localhost:5173 and go to Resume section.
+echo Now refresh http://localhost:5173 and use any Download Resume button.
 echo.
 pause

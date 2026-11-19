@@ -1,60 +1,58 @@
-import { useState, useEffect } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
+import { AnimatePresence, MotionConfig } from 'framer-motion'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { BackgroundEffects } from '@/components/layout/BackgroundEffects'
 import { LoadingScreen } from '@/components/ui/LoadingScreen'
-import { Hero } from '@/components/sections/Hero'
-import { About } from '@/components/sections/About'
-import { Skills } from '@/components/sections/Skills'
-import { Experience } from '@/components/sections/Experience'
-import { Projects } from '@/components/sections/Projects'
-import { Certifications } from '@/components/sections/Certifications'
-import { Resume } from '@/components/sections/Resume'
-import { Achievements } from '@/components/sections/Achievements'
-import { GitHubStats } from '@/components/sections/GitHubStats'
-import { Contact } from '@/components/sections/Contact'
-import { pageTransition } from '@/utils/animations'
+import { Hero, About, Impact, Stack, Experience, Projects, Certifications, Contact } from '@/components/sections'
+import { useSmoothScroll } from '@/hooks/useSmoothScroll'
+import { scrollToSection } from '@/utils/scrollTo'
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true)
+  const [loading, setLoading] = useState(true)
+  useSmoothScroll()
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 1500)
-    return () => clearTimeout(timer)
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const t = setTimeout(() => setLoading(false), reduce ? 0 : 1100)
+    return () => clearTimeout(t)
   }, [])
 
+  // Honour deep links like /#projects once the loader is gone
+  useEffect(() => {
+    if (!loading && window.location.hash.length > 1) {
+      const hash = window.location.hash
+      requestAnimationFrame(() => scrollToSection(hash))
+    }
+  }, [loading])
+
   return (
-    <>
-      <AnimatePresence mode="wait">
-        {isLoading && <LoadingScreen key="loader" />}
-      </AnimatePresence>
-
-      <motion.div
-        variants={pageTransition}
-        initial="initial"
-        animate="animate"
-        className="relative min-h-screen"
+    <MotionConfig reducedMotion="user">
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-full focus:bg-zinc-50 focus:px-4 focus:py-2 focus:text-sm focus:text-ink-950"
       >
-        <BackgroundEffects />
-        <Navbar />
+        Skip to content
+      </a>
 
-        <main>
-          <Hero />
-          <About />
-          <Skills />
-          <Experience />
-          <Projects />
-          <Certifications />
-          <Resume />
-          <Achievements />
-          <GitHubStats />
-          <Contact />
-        </main>
+      <AnimatePresence>{loading && <LoadingScreen key="loader" />}</AnimatePresence>
 
-        <Footer />
-      </motion.div>
-    </>
+      <BackgroundEffects />
+      <Navbar />
+
+      <main id="main" className="overflow-x-clip">
+        <Hero ready={!loading} />
+        <About />
+        <Impact />
+        <Stack />
+        <Experience />
+        <Projects />
+        <Certifications />
+        <Contact />
+      </main>
+
+      <Footer />
+    </MotionConfig>
   )
 }
 

@@ -1,4 +1,5 @@
-export { GlassCard } from './GlassCard'
 export { Button } from './Button'
 export { SectionHeading } from './SectionHeading'
+export { SplitText } from './SplitText'
 export { LoadingScreen } from './LoadingScreen'
+export { CountUp } from './CountUp'

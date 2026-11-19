@@ -1,138 +1,144 @@
-import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { HiMenuAlt3, HiX } from 'react-icons/hi'
+import { useEffect, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { HiOutlineArrowDownTray } from 'react-icons/hi2'
 import { navLinks, personalInfo } from '@/data/portfolio'
 import { useScrollSpy } from '@/hooks/useScrollSpy'
 import { scrollToSection } from '@/utils/scrollTo'
+import { EASE } from '@/utils/animations'
 
-const sectionIds = navLinks.map((link) => link.href.replace('#', ''))
+const sectionIds = navLinks.map((l) => l.href.slice(1))
 
 export function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileOpen, setIsMobileOpen] = useState(false)
-  const activeSection = useScrollSpy(sectionIds)
+  const [scrolled, setScrolled] = useState(false)
+  const [open, setOpen] = useState(false)
+  const active = useScrollSpy(sectionIds)
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50)
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    const onScroll = () => setScrolled(window.scrollY > 24)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const handleNavClick = (href: string) => {
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : ''
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false)
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [open])
+
+  const go = (href: string) => (e: React.MouseEvent) => {
+    e.preventDefault()
+    setOpen(false)
     scrollToSection(href)
-    setIsMobileOpen(false)
   }
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-dark-900/80 backdrop-blur-xl border-b border-white/[0.08] shadow-lg'
-          : 'bg-transparent'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          <motion.a
-            href="#home"
-            onClick={(e) => {
-              e.preventDefault()
-              handleNavClick('#home')
-            }}
-            className="text-xl font-bold text-white"
-            whileHover={{ scale: 1.05 }}
-          >
-            <span className="text-accent-light">V</span>
-            <span className="hidden sm:inline">init</span>
-            <span className="text-accent-light">.</span>
-          </motion.a>
+    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-4 sm:pt-4">
+      <motion.nav
+        aria-label="Primary"
+        initial={{ y: -40, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: EASE, delay: 0.2 }}
+        className={`mx-auto flex h-14 max-w-site items-center justify-between rounded-full border px-3 pl-5 transition-all duration-500 ${
+          scrolled
+            ? 'border-white/[0.08] bg-ink-900/70 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.6)] backdrop-blur-xl'
+            : 'border-transparent bg-transparent'
+        }`}
+      >
+        <a href="#home" onClick={go('#home')} className="font-display text-lg font-semibold tracking-tight text-zinc-50" aria-label="Vinit Yadav — back to top">
+          vinit<span className="text-gradient">.</span>dev
+        </a>
 
-          <div className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={(e) => {
-                  e.preventDefault()
-                  handleNavClick(link.href)
-                }}
-                className={`relative px-4 py-2 text-sm font-medium transition-colors duration-300 ${
-                  activeSection === link.href.replace('#', '')
-                    ? 'text-white'
-                    : 'text-gray-400 hover:text-white'
-                }`}
-              >
-                {link.label}
-                {activeSection === link.href.replace('#', '') && (
-                  <motion.span
-                    layoutId="activeNav"
-                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-accent rounded-full"
-                  />
-                )}
-              </a>
-            ))}
-          </div>
-
-          <motion.a
-            href={personalInfo.resumeUrl}
-            download={personalInfo.resumeFileName}
-            className="hidden md:inline-flex items-center px-5 py-2 text-sm font-medium text-white bg-accent/20 border border-accent/30 rounded-lg hover:bg-accent/30 transition-all duration-300"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Resume
-          </motion.a>
-
-          <button
-            className="md:hidden p-2 text-gray-300 hover:text-white"
-            onClick={() => setIsMobileOpen(!isMobileOpen)}
-            aria-label="Toggle menu"
-          >
-            {isMobileOpen ? <HiX size={24} /> : <HiMenuAlt3 size={24} />}
-          </button>
-        </div>
-      </div>
-
-      <AnimatePresence>
-        {isMobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-dark-800/95 backdrop-blur-xl border-b border-white/[0.08]"
-          >
-            <div className="px-4 py-4 space-y-1">
-              {navLinks.map((link) => (
+        <ul className="hidden items-center gap-1 lg:flex">
+          {navLinks.map((link) => {
+            const isActive = active === link.href.slice(1)
+            return (
+              <li key={link.href}>
                 <a
-                  key={link.href}
                   href={link.href}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    handleNavClick(link.href)
-                  }}
-                  className={`block px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
-                    activeSection === link.href.replace('#', '')
-                      ? 'text-white bg-white/10'
-                      : 'text-gray-400 hover:text-white hover:bg-white/5'
+                  onClick={go(link.href)}
+                  aria-current={isActive ? 'true' : undefined}
+                  className={`relative block rounded-full px-3.5 py-1.5 text-[13px] transition-colors duration-300 ${
+                    isActive ? 'text-zinc-50' : 'text-zinc-400 hover:text-zinc-100'
                   }`}
                 >
+                  {isActive && (
+                    <motion.span
+                      layoutId="nav-pill"
+                      className="absolute inset-0 -z-10 rounded-full bg-white/[0.07] ring-1 ring-white/10"
+                      transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                    />
+                  )}
                   {link.label}
                 </a>
+              </li>
+            )
+          })}
+        </ul>
+
+        <div className="flex items-center gap-2">
+          <a
+            href={personalInfo.resumeUrl}
+            download={personalInfo.resumeFileName}
+            className="hidden items-center gap-1.5 rounded-full bg-zinc-50 px-4 py-1.5 text-[13px] font-medium text-ink-950 transition-colors hover:bg-white sm:inline-flex"
+          >
+            <HiOutlineArrowDownTray className="h-3.5 w-3.5" aria-hidden />
+            Resume
+          </a>
+          <button
+            type="button"
+            onClick={() => setOpen((o) => !o)}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            className="relative flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] lg:hidden"
+          >
+            <span className={`absolute h-px w-4 bg-zinc-100 transition-transform duration-300 ${open ? 'rotate-45' : '-translate-y-[3px]'}`} />
+            <span className={`absolute h-px w-4 bg-zinc-100 transition-transform duration-300 ${open ? '-rotate-45' : 'translate-y-[3px]'}`} />
+          </button>
+        </div>
+      </motion.nav>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            id="mobile-menu"
+            initial={{ opacity: 0, y: -12, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -12, scale: 0.98 }}
+            transition={{ duration: 0.35, ease: EASE }}
+            className="panel-glass mx-auto mt-2 max-w-site overflow-hidden p-2 lg:hidden"
+          >
+            <ul>
+              {navLinks.map((link, i) => (
+                <motion.li
+                  key={link.href}
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.04 * i, duration: 0.4, ease: EASE }}
+                >
+                  <a
+                    href={link.href}
+                    onClick={go(link.href)}
+                    className="flex items-center justify-between rounded-xl px-4 py-3.5 text-[15px] text-zinc-200 hover:bg-white/[0.05]"
+                  >
+                    {link.label}
+                    <span className="font-mono text-[11px] text-zinc-600">0{i + 1}</span>
+                  </a>
+                </motion.li>
               ))}
-              <a
-                href={personalInfo.resumeUrl}
-                download={personalInfo.resumeFileName}
-                className="block px-4 py-3 text-sm font-medium text-accent-light"
-              >
-                Download Resume
-              </a>
-            </div>
+            </ul>
+            <a
+              href={personalInfo.resumeUrl}
+              download={personalInfo.resumeFileName}
+              className="mt-2 flex items-center justify-center gap-2 rounded-xl bg-zinc-50 px-4 py-3 text-sm font-medium text-ink-950"
+            >
+              <HiOutlineArrowDownTray aria-hidden /> Download Resume
+            </a>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </header>
   )
 }

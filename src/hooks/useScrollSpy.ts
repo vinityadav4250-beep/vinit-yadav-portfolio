@@ -1,26 +1,28 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
-export function useScrollSpy(sectionIds: string[], offset = 100) {
-  const [activeSection, setActiveSection] = useState(sectionIds[0])
+/** Returns the id of the section currently occupying the upper-middle of the viewport. */
+export function useScrollSpy(sectionIds: string[]) {
+  const [active, setActive] = useState<string>('')
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY + offset
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id)
+        })
+      },
+      { rootMargin: '-45% 0px -50% 0px' },
+    )
 
-      for (let i = sectionIds.length - 1; i >= 0; i--) {
-        const section = document.getElementById(sectionIds[i])
-        if (section && section.offsetTop <= scrollPosition) {
-          setActiveSection(sectionIds[i])
-          break
-        }
-      }
-    }
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id)
+      if (el) observer.observe(el)
+    })
+    const hero = document.getElementById('home')
+    if (hero) observer.observe(hero)
 
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    handleScroll()
+    return () => observer.disconnect()
+  }, [sectionIds])
 
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [sectionIds, offset])
-
-  return activeSection
+  return active
 }

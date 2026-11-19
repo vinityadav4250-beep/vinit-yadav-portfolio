@@ -1,30 +1,33 @@
 import { motion } from 'framer-motion'
+import { EASE } from '@/utils/animations'
 
 export function LoadingScreen() {
   return (
     <motion.div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-dark-900"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-ink-950"
       initial={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
+      exit={{ opacity: 0, transition: { duration: 0.6, ease: EASE } }}
+      role="status"
+      aria-label="Loading portfolio"
     >
       <div className="flex flex-col items-center gap-6">
         <motion.div
-          className="relative w-16 h-16"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, ease: EASE }}
+          className="font-display text-3xl font-semibold tracking-tightest text-zinc-50"
         >
-          <div className="absolute inset-0 rounded-full border-2 border-accent/20" />
-          <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-accent" />
+          VY<span className="text-gradient">.</span>
         </motion.div>
-        <motion.p
-          className="text-gray-400 font-mono text-sm tracking-wider"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: [0.4, 1, 0.4] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          Loading Portfolio...
-        </motion.p>
+        <div className="h-px w-40 overflow-hidden bg-white/10">
+          <motion.div
+            className="h-full w-full origin-left"
+            style={{ background: 'var(--grad)' }}
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.9, ease: EASE }}
+          />
+        </div>
       </div>
     </motion.div>
   )

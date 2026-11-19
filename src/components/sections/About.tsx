@@ -1,100 +1,71 @@
 import { motion } from 'framer-motion'
-import { FaBriefcase, FaMapMarkerAlt, FaCode, FaRocket } from 'react-icons/fa'
-import { personalInfo } from '@/data/portfolio'
+import { about, personalInfo } from '@/data/portfolio'
 import { SectionHeading } from '@/components/ui/SectionHeading'
-import { GlassCard } from '@/components/ui/GlassCard'
-import { fadeInLeft, staggerContainer, staggerItem } from '@/utils/animations'
-
-const highlights = [
-  {
-    icon: FaBriefcase,
-    title: '4+ Years',
-    subtitle: 'Professional Experience',
-    color: 'text-accent-light',
-  },
-  {
-    icon: FaCode,
-    title: 'Full Stack',
-    subtitle: '.NET & React Specialist',
-    color: 'text-cyan-accent',
-  },
-  {
-    icon: FaRocket,
-    title: personalInfo.company,
-    subtitle: 'Current Company',
-    color: 'text-emerald-400',
-  },
-  {
-    icon: FaMapMarkerAlt,
-    title: 'Noida',
-    subtitle: 'Uttar Pradesh, India',
-    color: 'text-orange-400',
-  },
-]
-
-const strengths = [
-  'Enterprise Application Development',
-  'Third-Party API Integrations',
-  'CKYC & Insurance Domain Expertise',
-  'Scalable Backend Architecture',
-  'Performance Optimization',
-  'Authentication & Security Systems',
-]
+import { fadeUp, stagger, viewportOnce } from '@/utils/animations'
 
 export function About() {
   return (
-    <section id="about" className="py-20 md:py-32">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="about" className="section" aria-label="About">
+      <div className="container-site">
         <SectionHeading
-          title="About Me"
-          subtitle="Passionate developer building enterprise-grade solutions"
+          index="01"
+          eyebrow="About"
+          title="Engineer of the systems behind the screens."
         />
 
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid gap-14 [&>*]:min-w-0 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
           <motion.div
-            variants={fadeInLeft}
+            variants={stagger(0.12)}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: '-50px' }}
+            viewport={viewportOnce}
+            className="space-y-6 text-[17px] leading-[1.75] text-zinc-400"
           >
-            <GlassCard className="p-8 md:p-10" hover={false}>
-              <div className="space-y-4 text-gray-300 leading-relaxed">
-                {personalInfo.about.split('\n\n').map((paragraph, i) => (
-                  <p key={i}>{paragraph}</p>
-                ))}
-              </div>
-
-              <div className="mt-8 pt-8 border-t border-white/[0.08]">
-                <h3 className="text-white font-semibold mb-4">Key Strengths</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {strengths.map((strength) => (
-                    <div key={strength} className="flex items-center gap-2 text-sm text-gray-400">
-                      <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-                      {strength}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </GlassCard>
-          </motion.div>
-
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-50px' }}
-            className="grid grid-cols-2 gap-4"
-          >
-            {highlights.map((item) => (
-              <motion.div key={item.title} variants={staggerItem}>
-                <GlassCard className="p-6 text-center h-full">
-                  <item.icon className={`text-3xl mx-auto mb-3 ${item.color}`} />
-                  <h3 className="text-white font-bold text-lg">{item.title}</h3>
-                  <p className="text-gray-400 text-sm mt-1">{item.subtitle}</p>
-                </GlassCard>
-              </motion.div>
+            {about.paragraphs.map((p, i) => (
+              <motion.p key={i} variants={fadeUp} className={i === 0 ? 'text-zinc-200' : ''}>
+                {p}
+              </motion.p>
             ))}
+
+            <motion.dl variants={fadeUp} className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.07] pt-0 sm:grid-cols-4">
+              {[
+                ['Experience', `${personalInfo.yearsOfExperience}+ years`],
+                ['Company', personalInfo.company],
+                ['Based in', 'Noida, IN'],
+                ['Focus', '.NET + React'],
+              ].map(([k, v]) => (
+                <div key={k} className="bg-ink-950 px-4 py-4">
+                  <dt className="font-mono text-[10px] uppercase tracking-widest text-zinc-600">{k}</dt>
+                  <dd className="mt-1 text-sm text-zinc-200">{v}</dd>
+                </div>
+              ))}
+            </motion.dl>
           </motion.div>
+
+          <motion.ul
+            variants={stagger(0.06)}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportOnce}
+            className="relative"
+            aria-label="What I focus on"
+          >
+            {about.focus.map((f, i) => (
+              <motion.li
+                key={f.title}
+                variants={fadeUp}
+                className="group grid grid-cols-[2.5rem_1fr] gap-2 border-t border-white/[0.06] py-5 last:border-b"
+              >
+                <span className="font-mono text-xs text-zinc-600 transition-colors group-hover:text-violet-400">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <div>
+                  <h3 className="text-[15px] font-medium text-zinc-100 transition-transform duration-500 group-hover:translate-x-1">{f.title}</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-zinc-500">{f.text}</p>
+                </div>
+              </motion.li>
+            ))}
+          </motion.ul>
         </div>
       </div>
     </section>

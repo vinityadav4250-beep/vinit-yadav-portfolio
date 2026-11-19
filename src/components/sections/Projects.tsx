@@ -1,101 +1,110 @@
 import { motion } from 'framer-motion'
-import { FaGithub, FaExternalLinkAlt, FaImage } from 'react-icons/fa'
+import { HiOutlineLockClosed, HiOutlineSparkles } from 'react-icons/hi2'
 import { projects } from '@/data/portfolio'
+import type { Project } from '@/data/portfolio'
 import { SectionHeading } from '@/components/ui/SectionHeading'
-import { GlassCard } from '@/components/ui/GlassCard'
-import { staggerContainer, staggerItem } from '@/utils/animations'
+import { EASE, fadeUp, stagger } from '@/utils/animations'
+import { ProjectVisual } from './ProjectVisual'
+
+function ProjectRow({ project, flip }: { project: Project; flip: boolean }) {
+  return (
+    <motion.article
+      className="group grid items-center gap-8 [&>*]:min-w-0 lg:grid-cols-2 lg:gap-16"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-120px' }}
+      aria-labelledby={`${project.id}-title`}
+    >
+      <motion.div
+        className={flip ? 'lg:order-2' : ''}
+        variants={{
+          hidden: { clipPath: 'inset(12% 12% 12% 12% round 28px)', opacity: 0, scale: 1.04 },
+          visible: { clipPath: 'inset(0% 0% 0% 0% round 22px)', opacity: 1, scale: 1, transition: { duration: 1.2, ease: EASE } },
+        }}
+      >
+        <ProjectVisual project={project} />
+      </motion.div>
+
+      <motion.div variants={stagger(0.07, 0.15)} className={flip ? 'lg:order-1' : ''}>
+        <motion.div variants={fadeUp} className="mb-4 flex flex-wrap items-center gap-3 font-mono text-xs">
+          <span className="text-violet-400">{project.index}</span>
+          <span className="h-px w-6 bg-white/15" aria-hidden />
+          <span className="text-zinc-500">{project.kind}</span>
+          {project.status && (
+            <span className="inline-flex items-center gap-1 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-2 py-0.5 text-[10px] text-emerald-300">
+              <HiOutlineSparkles aria-hidden /> {project.status}
+            </span>
+          )}
+        </motion.div>
+
+        <motion.h3 variants={fadeUp} id={`${project.id}-title`} className="text-3xl font-semibold tracking-tight text-zinc-50 md:text-4xl">
+          {project.title}
+        </motion.h3>
+        <motion.p variants={fadeUp} className="mt-2 font-mono text-xs text-zinc-600">
+          {project.period}
+        </motion.p>
+
+        <motion.p variants={fadeUp} className="mt-5 leading-relaxed text-zinc-400">
+          {project.summary}
+        </motion.p>
+
+        <motion.ul variants={fadeUp} className="mt-6 flex flex-wrap gap-2" aria-label="Technologies">
+          {project.tech.map((t) => (
+            <li key={t} className="chip">
+              {t}
+            </li>
+          ))}
+        </motion.ul>
+
+        <motion.div variants={fadeUp} className="mt-8 grid gap-8 sm:grid-cols-2">
+          <div>
+            <h4 className="eyebrow mb-3">Key features</h4>
+            <ul className="space-y-2">
+              {project.features.map((f) => (
+                <li key={f} className="flex items-start gap-2.5 text-sm text-zinc-300">
+                  <span className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-violet-400" aria-hidden />
+                  {f}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h4 className="eyebrow mb-3">Architecture</h4>
+            <ul className="space-y-2">
+              {project.architecture.map((a) => (
+                <li key={a} className="flex items-start gap-2.5 text-sm text-zinc-400">
+                  <span className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-aqua-400" aria-hidden />
+                  {a}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </motion.div>
+
+        <motion.p variants={fadeUp} className="mt-8 flex items-center gap-2 border-t border-white/[0.06] pt-5 text-xs text-zinc-500">
+          <HiOutlineLockClosed className="shrink-0" aria-hidden />
+          {project.note}
+        </motion.p>
+      </motion.div>
+    </motion.article>
+  )
+}
 
 export function Projects() {
   return (
-    <section id="projects" className="py-20 md:py-32">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="projects" className="section" aria-label="Featured projects">
+      <div className="container-site">
         <SectionHeading
-          title="Featured Projects"
-          subtitle="Enterprise applications and integrations I've built and contributed to"
+          index="04"
+          eyebrow="Featured work"
+          title="Platforms I've helped build and scale."
+          description="Enterprise systems from my work at EBIXCASH, plus an independent product I'm building. Previews are illustrative — the production systems are confidential."
         />
-
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-50px' }}
-          className="grid md:grid-cols-2 gap-6"
-        >
-          {projects.map((project) => (
-            <motion.div key={project.id} variants={staggerItem}>
-              <GlassCard className="h-full flex flex-col overflow-hidden group">
-                <div
-                  className={`relative h-48 bg-gradient-to-br ${project.gradient} flex items-center justify-center border-b border-white/[0.08]`}
-                >
-                  <div className="absolute inset-0 bg-dark-900/40" />
-                  <FaImage className="text-4xl text-white/20 group-hover:text-white/40 transition-colors duration-300" />
-                  <span className="absolute bottom-3 right-3 text-xs text-gray-500 font-mono">
-                    Screenshot Placeholder
-                  </span>
-                </div>
-
-                <div className="p-6 md:p-8 flex flex-col flex-1">
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-accent-light transition-colors">
-                    {project.title}
-                  </h3>
-                  <p className="text-gray-400 text-sm mb-4 leading-relaxed flex-1">
-                    {project.description}
-                  </p>
-
-                  <div className="mb-4">
-                    <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
-                      Features
-                    </h4>
-                    <ul className="space-y-1.5">
-                      {project.features.slice(0, 3).map((feature) => (
-                        <li key={feature} className="flex items-center gap-2 text-sm text-gray-400">
-                          <span className="w-1 h-1 rounded-full bg-accent" />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {project.technologies.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-2.5 py-1 text-xs font-medium text-accent-light bg-accent/10 rounded-md border border-accent/20"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="flex gap-3 mt-auto">
-                    <motion.a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-300 bg-white/[0.05] rounded-lg border border-white/[0.08] hover:bg-white/[0.1] hover:text-white transition-all duration-300"
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      <FaGithub />
-                      GitHub
-                    </motion.a>
-                    <motion.a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-300 bg-white/[0.05] rounded-lg border border-white/[0.08] hover:bg-white/[0.1] hover:text-white transition-all duration-300"
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      <FaExternalLinkAlt className="text-xs" />
-                      Live Demo
-                    </motion.a>
-                  </div>
-                </div>
-              </GlassCard>
-            </motion.div>
+        <div className="space-y-28 md:space-y-36">
+          {projects.map((p, i) => (
+            <ProjectRow key={p.id} project={p} flip={i % 2 === 1} />
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   )

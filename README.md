@@ -1,169 +1,57 @@
-# Vinit Yadav — Portfolio Website
+# Vinit Yadav — Portfolio
 
-A modern, premium, recruiter-focused portfolio website built with React, TypeScript, Tailwind CSS, and Framer Motion.
+Personal portfolio of **Vinit Yadav**, Full-Stack Software Engineer (.NET Core · C# · React).
+Live: https://vinit-yadav-portfolio.vercel.app
 
-![Tech Stack](https://img.shields.io/badge/React-18-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-5.6-blue) ![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38bdf8) ![Vite](https://img.shields.io/badge/Vite-6-646cff)
+## Stack
 
-## Features
+- React 18 + TypeScript, Vite 6
+- Tailwind CSS 3 (custom dark design tokens in `tailwind.config.js` and `src/index.css`)
+- Framer Motion 11 for reveals, split-text, magnetic buttons, timeline and parallax
+- Lenis for smooth scrolling (off for touch devices and `prefers-reduced-motion`)
+- react-icons
 
-- Dark mode premium design with glassmorphism effects
-- Smooth scroll navigation and page transitions
-- Animated typing effect in hero section
-- Fully responsive layout for all devices
-- SEO optimized with meta tags
-- Reusable component architecture
-- Loading screen animation
-- GitHub contribution graph integration
-- Contact form with mailto integration
-
-## Tech Stack
-
-- **Framework:** React 18 + TypeScript
-- **Build Tool:** Vite 6
-- **Styling:** Tailwind CSS 3
-- **Animations:** Framer Motion
-- **Icons:** React Icons
-
-## Project Structure
+## Structure
 
 ```
 src/
+├── data/portfolio.ts          # ALL content: profile, metrics, stack, experience, projects, certifications
 ├── components/
-│   ├── layout/          # Navbar, Footer, BackgroundEffects
-│   ├── sections/        # Hero, About, Skills, Experience, etc.
-│   └── ui/              # Reusable UI components (Button, GlassCard, etc.)
-├── data/
-│   └── portfolio.ts     # All portfolio content and configuration
-├── hooks/               # Custom React hooks
-├── utils/               # Animation variants and utilities
-├── App.tsx
-├── main.tsx
-└── index.css
+│   ├── layout/                # Navbar, Footer, BackgroundEffects (grid, glow, cursor light)
+│   ├── sections/              # Hero, About, Impact, Stack, Experience, Projects, Certifications, Contact
+│   └── ui/                    # Button (magnetic), SplitText, SectionHeading, CountUp, LoadingScreen
+├── hooks/                     # useSmoothScroll, useScrollSpy, useSpotlight
+└── utils/                     # animation variants, scrollToSection
+public/
+├── resume/Vinit_Yadav_Resume.pdf   # served by every "Download Resume" button
+├── og-image.png                    # 1200×630 social preview
+├── robots.txt, sitemap.xml, favicon.svg
 ```
 
-## Getting Started
+## Editing content
 
-### Prerequisites
+Everything shown on the page comes from `src/data/portfolio.ts`.
 
-- Node.js 18+ 
-- npm or yarn
+- **Add a certification:** append to `certifications` (title, issuer, date, skills, url).
+- **Update the resume:** replace `public/resume/Vinit_Yadav_Resume.pdf` (keep the file name), or run `copy-resume.bat`.
+- **Metrics:** only resume-backed numbers live in `metrics` — keep it that way.
 
-### Installation
+## Contact form
+
+There is no backend. The form validates input and opens the visitor's email app with a pre-filled
+message (`mailto:`), plus "Copy email" and direct email/LinkedIn CTAs.
+
+## Scripts
 
 ```bash
-# Clone the repository
-git clone https://github.com/vinityadav/MyPortfolio.git
-cd MyPortfolio
-
-# Install dependencies
 npm install
-
-# Start development server
-npm run dev
-```
-
-Open [http://localhost:5173](http://localhost:5173) in your browser.
-
-### Build for Production
-
-```bash
-npm run build
+npm run dev       # http://localhost:5173
+npm run build     # type-check + production build to dist/
 npm run preview
+npm run lint
 ```
 
-## Customization
+Deployed on Vercel (`vercel.json`); pushes to `main` redeploy automatically.
 
-### Update Personal Information
-
-Edit `src/data/portfolio.ts` to update:
-- Name, title, location, and contact details
-- Skills and technologies
-- Work experience
-- Projects
-- Certifications and achievements
-- Social media links
-
-### Add Resume
-
-Place your resume PDF at:
-```
-public/resume/Vinit_Yadav_Resume.pdf
-```
-
-### Update GitHub Username
-
-In `src/data/portfolio.ts`, update the `githubStats.username` and `personalInfo.github` fields with your actual GitHub username.
-
-## Deployment
-
-### Deploy to Vercel
-
-1. Push your code to GitHub
-2. Go to [vercel.com](https://vercel.com) and sign in with GitHub
-3. Click **New Project** and import your repository
-4. Vercel auto-detects Vite — use these settings:
-   - **Framework Preset:** Vite
-   - **Build Command:** `npm run build`
-   - **Output Directory:** `dist`
-5. Click **Deploy**
-
-Alternatively, use the Vercel CLI:
-
-```bash
-npm install -g vercel
-vercel
-```
-
-### Deploy to GitHub Pages
-
-1. Update `vite.config.ts` base path if your repo name differs from `MyPortfolio`
-
-2. Install gh-pages:
-
-```bash
-npm install --save-dev gh-pages
-```
-
-3. Add deploy scripts to `package.json`:
-
-```json
-{
-  "scripts": {
-    "predeploy": "cross-env GITHUB_PAGES=true npm run build",
-    "deploy": "gh-pages -d dist"
-  }
-}
-```
-
-4. Install cross-env (for Windows compatibility):
-
-```bash
-npm install --save-dev cross-env gh-pages
-```
-
-5. Deploy:
-
-```bash
-npm run deploy
-```
-
-6. Enable GitHub Pages in your repo settings:
-   - Go to **Settings → Pages**
-   - Source: **Deploy from branch**
-   - Branch: **gh-pages** / **root**
-
-Your site will be live at `https://<username>.github.io/MyPortfolio/`
-
-## Environment Notes
-
-- For GitHub Pages, the `base` path is set via `GITHUB_PAGES=true` environment variable
-- For Vercel and other hosts, no environment variables are needed
-- Update placeholder links (email, GitHub, LinkedIn) in `portfolio.ts` before deploying
-
-## License
-
-This project is open source and available under the [MIT License](LICENSE).
-
----
-
-**Designed and Developed by Vinit Yadav**
+> Note: if the project sits in a OneDrive folder and Vite fails with `EPERM … node_modules\.vite\deps`,
+> delete `node_modules/.vite` and start again.
